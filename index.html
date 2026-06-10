@@ -81,7 +81,7 @@
           <h2>Оюутны хуваарь</h2>
           <small>SE23D18 • Энхтулга</small>
         </div>
-        <button class="icon-button" type="button" data-action="logout" aria-label="Гарах">⎋</button>
+        <button class="icon-button" type="button" data-action="logout" aria-label="Гарах">Гарах</button>
       </header>
 
       <section class="dashboard-summary">
@@ -91,7 +91,7 @@
         </div>
         <div>
           <span>үнэлгээний голч</span>
-          <strong>3.45</strong>
+          <strong id="dashboardGpa">0.00</strong>
         </div>
       </section>
 
@@ -128,7 +128,7 @@
 <button type="button" data-day="Лхагва" onclick="setDay('Лхагва')">Лх</button>
 <button type="button" data-day="Пүрэв" onclick="setDay('Пүрэв')">Пү</button>
 <button type="button" data-day="Баасан" onclick="setDay('Баасан')">Ба</button>
-
+      </div>
       <section id="scheduleList" class="schedule-list"></section>
     </section>
 
@@ -139,6 +139,7 @@
       </div>
 
       <p class="page-note">Хичээл бүрийн лаборатори, ирц, бие даалт, шалгалтын онооны задаргаа.</p>
+      <section id="gradeSummary" class="grade-summary" aria-label="Дүнгийн нэгтгэл"></section>
       <div id="gradeList" class="grade-list"></div>
     </section>
 

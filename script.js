@@ -72,8 +72,10 @@ const state = {
   ],
   grades: [
     {
+      semester: "2025 Намар",
       code: "WD101",
       name: "Web Development",
+      credit: 2,
       lab: 18,
       attendance: 10,
       assignment: 24,
@@ -81,8 +83,10 @@ const state = {
       final: 22
     },
     {
+      semester: "2025 Намар",
       code: "CS101",
       name: "Java Programming",
+      credit: 3,
       lab: 17,
       attendance: 9,
       assignment: 21,
@@ -90,13 +94,59 @@ const state = {
       final: 20
     },
     {
+      semester: "2025 Намар",
       code: "DB101",
       name: "Database System",
+      credit: 3,
       lab: 19,
       attendance: 10,
       assignment: 23,
       midterm: 16,
       final: 21
+    },
+    {
+      semester: "2025 Хавар",
+      code: "MATH102",
+      name: "Calculus II",
+      credit: 3,
+      lab: 18,
+      attendance: 9,
+      assignment: 22,
+      midterm: 17,
+      final: 21
+    },
+    {
+      semester: "2025 Хавар",
+      code: "ENG102",
+      name: "Academic English II",
+      credit: 2,
+      lab: 19,
+      attendance: 10,
+      assignment: 23,
+      midterm: 18,
+      final: 20
+    },
+    {
+      semester: "2024 Намар",
+      code: "MATH101",
+      name: "Calculus I",
+      credit: 3,
+      lab: 17,
+      attendance: 10,
+      assignment: 21,
+      midterm: 16,
+      final: 22
+    },
+    {
+      semester: "2024 Намар",
+      code: "PHY101",
+      name: "Physics",
+      credit: 3,
+      lab: 18,
+      attendance: 9,
+      assignment: 20,
+      midterm: 17,
+      final: 19
     }
   ],
   attendance: [],
@@ -151,16 +201,7 @@ const openPage = (pageId) => {
   }
 
   if (pageId === "schedulePage") {
-    renderSchedule();if (!state.payment.completed) {
-  container.innerHTML = `
-    <article class="empty-state">
-      <h3>Хуваарь харахын тулд төлбөрөө төлнө үү</h3>
-      <p>QR эсвэл дансаар төлбөрөө баталгаажуулсны дараа хичээлийн хуваарь автоматаар гарна.</p>
-      <button type="button" data-page="paymentPage">Төлбөр төлөх</button>
-    </article>
-  `;
-  return;
-}
+    renderSchedule();
   }
 
   if (pageId === "courseHubPage") {
@@ -185,6 +226,17 @@ const getScheduledCourses = () => getSelectedCourses().filter((course) => course
 
 const renderSchedule = () => {
   const container = document.getElementById("scheduleList");
+  if (!state.payment.completed) {
+    container.innerHTML = `
+      <article class="empty-state">
+        <h3>Хуваарь харахын тулд төлбөрөө төлнө үү</h3>
+        <p>QR эсвэл дансаар төлбөрөө баталгаажуулсны дараа хичээлийн хуваарь автоматаар гарна.</p>
+        <button type="button" data-page="paymentPage">Төлбөр төлөх</button>
+      </article>
+    `;
+    return;
+  }
+
   const scheduledCourses = getScheduledCourses().filter(course =>
   course.time.startsWith(state.activeDay)
 );
@@ -254,35 +306,104 @@ const getLetterGrade = (score) => {
   return "F";
 };
 
+const getGradePoint = (score) => {
+  if (score >= 90) return 4.0;
+  if (score >= 87) return 3.7;
+  if (score >= 83) return 3.3;
+  if (score >= 80) return 3.0;
+  if (score >= 77) return 2.7;
+  if (score >= 73) return 2.3;
+  if (score >= 70) return 2.0;
+  if (score >= 60) return 1.0;
+  return 0;
+};
+
+const getSemesterStats = (grades) => {
+  const courseCount = grades.length;
+  const creditCount = grades.reduce((sum, grade) => sum + grade.credit, 0);
+  const averageGpa = creditCount
+    ? grades.reduce((sum, grade) => {
+        return sum + getGradePoint(getTotalScore(grade)) * grade.credit;
+      }, 0) / creditCount
+    : 0;
+
+  return {
+    courseCount,
+    creditCount,
+    averageGpa: averageGpa.toFixed(2)
+  };
+};
+
 const renderGradeList = () => {
   const container = document.getElementById("gradeList");
+  const summary = document.getElementById("gradeSummary");
+  const totalStats = getSemesterStats(state.grades);
+  const semesterGroups = state.grades.reduce((groups, grade) => {
+    if (!groups[grade.semester]) {
+      groups[grade.semester] = [];
+    }
 
-  container.innerHTML = state.grades
-    .map((grade) => {
-      const total = getTotalScore(grade);
-      const letter = getLetterGrade(total);
+    groups[grade.semester].push(grade);
+    return groups;
+  }, {});
 
+  summary.innerHTML = `
+    <div>
+      <span>Нийт хичээл</span>
+      <strong>${totalStats.courseCount}</strong>
+    </div>
+    <div>
+      <span>Нийт кредит</span>
+      <strong>${totalStats.creditCount}</strong>
+    </div>
+    <div>
+      <span>Голч</span>
+      <strong>${totalStats.averageGpa}</strong>
+    </div>
+  `;
+
+  container.innerHTML = Object.entries(semesterGroups)
+    .map(([semester, grades]) => {
+      const semesterStats = getSemesterStats(grades);
       return `
-        <article class="grade-card">
-          <div class="grade-head">
+        <section class="semester-block">
+          <div class="semester-head">
             <div>
-              <h3>${grade.code} - ${grade.name}</h3>
-              <span>Нийт 100 онооноос</span>
+              <h3>${semester}</h3>
+              <span>${semesterStats.courseCount} хичээл • ${semesterStats.creditCount} кредит</span>
             </div>
-            <strong>${letter}</strong>
+            <strong>${semesterStats.averageGpa}</strong>
           </div>
-          <div class="grade-total">
-            <span>Нийт оноо</span>
-            <b>${total}</b>
-          </div>
-          <div class="grade-breakdown">
-            <div><span>Лаб</span><strong>${grade.lab}/20</strong></div>
-            <div><span>Ирц</span><strong>${grade.attendance}/10</strong></div>
-            <div><span>Бие даалт</span><strong>${grade.assignment}/25</strong></div>
-            <div><span>Явцын шалгалт</span><strong>${grade.midterm}/20</strong></div>
-            <div><span>Улирлын шалгалт</span><strong>${grade.final}/25</strong></div>
-          </div>
-        </article>
+          ${grades
+            .map((grade) => {
+              const total = getTotalScore(grade);
+              const letter = getLetterGrade(total);
+
+              return `
+                <article class="grade-card">
+                  <div class="grade-head">
+                    <div>
+                      <h3>${grade.code} - ${grade.name}</h3>
+                      <span>${grade.credit} кредит • Нийт 100 онооноос</span>
+                    </div>
+                    <strong>${letter}</strong>
+                  </div>
+                  <div class="grade-total">
+                    <span>Нийт оноо</span>
+                    <b>${total}</b>
+                  </div>
+                  <div class="grade-breakdown">
+                    <div><span>Лаб</span><strong>${grade.lab}/20</strong></div>
+                    <div><span>Ирц</span><strong>${grade.attendance}/10</strong></div>
+                    <div><span>Бие даалт</span><strong>${grade.assignment}/25</strong></div>
+                    <div><span>Явцын шалгалт</span><strong>${grade.midterm}/20</strong></div>
+                    <div><span>Улирлын шалгалт</span><strong>${grade.final}/25</strong></div>
+                  </div>
+                </article>
+              `;
+            })
+            .join("")}
+        </section>
       `;
     })
     .join("");
@@ -471,6 +592,7 @@ const updateCredit = () => {
   const totalPayment = totalCredit * creditPrice;
 
   document.getElementById("creditCount").textContent = totalCredit;
+  document.getElementById("dashboardGpa").textContent = getSemesterStats(state.grades).averageGpa;
   document.getElementById("hubCreditCount").textContent = totalCredit;
   document.getElementById("hubPaymentCredit").textContent = totalCredit;
   document.getElementById("hubPaymentTotal").textContent = formatCurrency(totalPayment);
