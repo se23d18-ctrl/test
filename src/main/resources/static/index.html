@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Оюутны систем</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app">
+    <section id="loginPage" class="page active">
+      <div class="login-box">
+        <a class="login-visual" href="https://nmit.edu.mn/mn" target="_blank" rel="noopener noreferrer">
+          <div class="login-brand-link">
+            <strong>NMIT Student Portal</strong>
+            <span>New Mongol Institute of Technology</span>
+          </div>
+        </a>
+
+        <div class="login-panel">
+          <h1>Нэвтрэх</h1>
+          <p class="subtitle">Оюутны мэдээллийн систем</p>
+
+          <div class="field">
+            <label for="studentCode">Оюутны код</label>
+            <input id="studentCode" type="text" placeholder="SE23D18" autocomplete="username">
+          </div>
+
+          <div class="field">
+            <label for="password">Нууц үг</label>
+            <input id="password" type="password" placeholder="••••" autocomplete="current-password">
+          </div>
+
+          <a id="forgotPasswordLink" class="form-link" href="#recoveryPage">Нууц үг сэргээх</a>
+          <button id="loginButton" type="button">Нэвтрэх</button>
+          
+          <p id="loginMsg" class="message"></p>
+
+          <button id="loginThemeToggle" class="login-theme-toggle" type="button" aria-label="Theme солих">Dark mode</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="recoveryPage" class="page">
+      <div class="recovery-page">
+        <article class="recovery-card">
+          <h1>Нууц үг сэргээх</h1>
+          <p class="subtitle">Оюутны кодоо оруулаад сэргээх хүсэлт илгээнэ үү.</p>
+
+          <div class="field">
+            <label for="recoveryCode">Оюутны код</label>
+            <input id="recoveryCode" type="text" placeholder="SE23D18" autocomplete="username">
+          </div>
+
+          <div class="field">
+            <label for="newPassword">Шинэ нууц үг</label>
+            <input id="newPassword" type="password" placeholder="Шинэ нууц үг" autocomplete="new-password">
+          </div>
+
+          <div class="field">
+            <label for="confirmPassword">Шинэ нууц үг давтах</label>
+            <input id="confirmPassword" type="password" placeholder="Давтан оруулах" autocomplete="new-password">
+          </div>
+
+          <div class="recovery-panel">
+            <strong>Сэргээх нөхцөл</strong>
+            <p>Оюутны код зөв байх ёстой.</p>
+            <p>Шинэ нууц үг 4-с дээш тэмдэгттэй, давталттайгаа ижил байх ёстой.</p>
+          </div>
+
+          <button id="sendRecoveryButton" type="button">Шинэ нууц үг хадгалах</button>
+          <button class="secondary-button" type="button" data-page="loginPage">Нэвтрэх хэсэг рүү буцах</button>
+          <p id="recoveryMsg" class="message"></p>
+        </article>
+      </div>
+    </section>
+
+    <section id="homePage" class="page">
+      <header class="dashboard-header">
+        <button class="profile-menu-button" type="button" data-action="openStudentMenu" aria-label="Оюутны цэс">ET</button>
+        <div class="dashboard-student">
+          <small>SE23D18 • Энхтулга</small>
+        </div>
+        <button class="icon-button notification-button" type="button" data-page="notificationPage" aria-label="Мэдэгдэл">
+          <svg aria-hidden="true" viewBox="0 0 24 24">
+            <path d="M10.27 21a2 2 0 0 0 3.46 0"></path>
+            <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
+          </svg>
+        </button>
+      </header>
+
+      <section class="dashboard-summary">
+        <div>
+          <span>энэ улиралын кредит</span>
+        
+          <strong id="creditCount">0</strong>
+        </div>
+        <div>
+          <span>үнэлгээний голч</span>
+          <strong id="dashboardGpa">0.00</strong>
+        </div>
+      </section>
+
+     <section class="today-card">
+  <div class="lesson-icon" id="todayIcon">⌘</div>
+  <div class="lesson-content">
+    <h3>Өнөөдрийн хичээл</h3>
+    <p id="todayCourse">Хуваарь үүсээгүй байна</p>
+    <div>
+      <span id="todayRoom">Төлбөр төлсний дараа гарна</span>
+      <strong id="todayTime">--:--</strong>
+    </div>
+  </div>
+</section>
+
+      <footer class="bottom-nav" aria-label="Үндсэн цэс">
+        <button type="button" data-page="schedulePage"><strong>▦</strong><span>Хуваарь</span></button>
+        <button type="button" data-page="courseHubPage"><strong>＋</strong><span>Сонголт</span></button>
+        <button type="button" data-page="gradePage"><strong>★</strong><span>Дүн</span></button>
+        <button type="button" data-page="attendancePage"><strong>▣</strong><span>Ирц</span></button>
+      </footer>
+
+    </section>
+
+    <aside id="studentMenu" class="student-menu-overlay hidden" aria-hidden="true">
+      <button class="student-menu-backdrop" type="button" data-action="closeStudentMenu" aria-label="Цэс хаах"></button>
+      <nav class="student-menu-panel" aria-label="Оюутны цэс">
+        <div class="student-profile">
+          <div class="student-avatar" aria-hidden="true">
+            <span></span>
+          </div>
+          <strong>С.ЭНХТУЛГА</strong>
+          <span class="student-code">Код : SE23D18</span>
+          <small>SE23D18@nmit.edu.mn</small>
+        </div>
+
+        <div class="student-menu-list">
+          <button type="button" data-page="surveyPage"><span>▤</span>Санал асуулга</button>
+          <button type="button" data-page="leaveRequestPage"><span>▣</span>Чөлөөний хүсэлт</button>
+          <button type="button" data-page="profilePage"><span>♙</span>Миний мэдээлэл</button>
+          <button id="themeToggle" type="button" aria-label="Theme солих"><span>◐</span>Template</button>
+        </div>
+
+        <button class="student-menu-logout" type="button" data-action="logout">
+          <span>↪</span>Гарах
+        </button>
+      </nav>
+    </aside>
+
+    <section id="notificationPage" class="page">
+      <div class="top">
+        <button type="button" data-page="homePage">← Буцах</button>
+        <h2>Мэдэгдэл</h2>
+      </div>
+
+      <div id="notificationList" class="notification-list">
+        <article class="notification-card">
+          <strong>Хичээл сонголт</strong>
+          <p>Хичээл сонголтын мэдээллээ шалгана уу.</p>
+          <small>Өнөөдөр</small>
+        </article>
+        <article class="notification-card">
+          <strong>Төлбөр</strong>
+          <p>Төлбөр төлсний дараа хуваарь идэвхжинэ.</p>
+          <small>Өчигдөр</small>
+        </article>
+      </div>
+    </section>
+
+    <section id="schedulePage" class="page">
+      <div class="top">
+        <button type="button" data-page="homePage">← Буцах</button>
+        <h2>Хичээлийн хуваарь</h2>
+      </div>
+
+      <div class="day-tabs" aria-label="Гараг сонгох">
+ <button class="active" type="button" data-day="Даваа" onclick="setDay('Даваа')">Да</button>
+<button type="button" data-day="Мягмар" onclick="setDay('Мягмар')">Мя</button>
+<button type="button" data-day="Лхагва" onclick="setDay('Лхагва')">Лх</button>
+<button type="button" data-day="Пүрэв" onclick="setDay('Пүрэв')">Пү</button>
+<button type="button" data-day="Баасан" onclick="setDay('Баасан')">Ба</button>
+      </div>
+      <section id="scheduleList" class="schedule-list"></section>
+    </section>
+
+    <section id="surveyPage" class="page">
+      <div class="top">
+        <button type="button" data-page="homePage">← Буцах</button>
+        <h2>Санал асуулга</h2>
+      </div>
+
+      <article class="card form-card">
+        <h3 class="section-title">Хичээлийн сэтгэл ханамж</h3>
+        <div class="field">
+          <label for="surveyCourse">Хичээл</label>
+          <select id="surveyCourse">
+            <option value="">Хичээл сонгох</option>
+            <option value="Java Programming">Java Programming</option>
+            <option value="Database System">Database System</option>
+            <option value="Web Development">Web Development</option>
+            <option value="Software Engineering">Software Engineering</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="surveyRating">Үнэлгээ</label>
+          <select id="surveyRating">
+            <option value="">Үнэлгээ сонгох</option>
+            <option value="5">5 - Маш сайн</option>
+            <option value="4">4 - Сайн</option>
+            <option value="3">3 - Дунд</option>
+            <option value="2">2 - Сайжруулах хэрэгтэй</option>
+            <option value="1">1 - Хангалтгүй</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="surveyComment">Санал</label>
+          <textarea id="surveyComment" rows="4" placeholder="Саналаа бичнэ үү"></textarea>
+        </div>
+
+        <button type="button" id="submitSurveyButton">Илгээх</button>
+        <p id="surveyMsg" class="message"></p>
+      </article>
+    </section>
+
+    <section id="leaveRequestPage" class="page">
+      <div class="top">
+        <button type="button" data-page="homePage">← Буцах</button>
+        <h2>Чөлөөний хүсэлт</h2>
+      </div>
+
+      <article class="card form-card">
+        <h3 class="section-title">Хүсэлт илгээх</h3>
+        <div class="field">
+          <label for="leaveDate">Огноо</label>
+          <input id="leaveDate" type="date">
+        </div>
+
+        <div class="field">
+          <label for="leaveReason">Шалтгаан</label>
+          <textarea id="leaveReason" rows="4" placeholder="Чөлөө авах шалтгаанаа бичнэ үү"></textarea>
+        </div>
+
+        <button type="button" id="submitLeaveButton">Хүсэлт илгээх</button>
+        <p id="leaveMsg" class="message"></p>
+      </article>
+    </section>
+
+    <section id="gradePage" class="page">
+      <div class="top">
+        <button type="button" data-page="homePage">← Буцах</button>
+        <h2>Дүн</h2>
+      </div>
+
+      <p class="page-note">Хичээл бүрийн лаборатори, ирц, бие даалт, шалгалтын онооны задаргаа.</p>
+      <section id="gradeSummary" class="grade-summary" aria-label="Дүнгийн нэгтгэл"></section>
+      <div id="gradeList" class="grade-list"></div>
+    </section>
+
+    <section id="courseHubPage" class="page">
+      <div class="top">
+        <button type="button" data-page="homePage">← Буцах</button>
+        <h2>Хичээл сонголт</h2>
+      </div>
+
+      <section class="hub-summary">
+        <div>
+          <span>Сонгосон кредит</span>
+          <strong id="hubCreditCount">0</strong>
+        </div>
+        <div>
+          <span>1 кредитийн үнэ</span>
+          <strong>220,000₮</strong>
+        </div>
+      </section>
+
+      <article class="hub-section">
+        <div class="hub-head">
+          <h3>Хичээл сонголт I</h3>
+          <small>Боломжтой хичээлүүд</small>
+        </div>
+        <div id="hubCourse1List" class="course-list compact"></div>
+      </article>
+
+      <article class="hub-section">
+        <div class="hub-head">
+          <h3>Хичээл сонголт II</h3>
+          <small>Багш болон цаг сонгох</small>
+        </div>
+        <div id="hubCourse2List" class="course-list compact"></div>
+      </article>
+
+      <article class="hub-section payment-mini">
+        <div class="hub-head">
+          <h3>Төлбөр</h3>
+          <small>1 кредит = 220,000₮</small>
+        </div>
+        <p>Сонгосон кредит: <strong id="hubPaymentCredit">0</strong></p>
+        <p>Тооцсон төлбөр: <strong id="hubPaymentTotal">0₮</strong></p>
+        <p>1 кредитийн үнэ: <strong>220,000₮</strong></p>
+        <button type="button" data-page="paymentPage">Төлбөр төлөх</button>
+      </article>
+    </section>
+
+    <section id="course1Page" class="page">
+      <div class="top">
+        <button type="button" data-page="homePage">← Буцах</button>
+        <h2>Хичээл сонголт I</h2>
+      </div>
+
+      <p class="page-note">Боломжтой хичээлүүдээс сонгоно. Дараагийн шатанд багш болон цагийг тохируулна.</p>
+      <div id="course1List" class="course-list"></div>
+    </section>
+
+    <section id="course2Page" class="page">
+      <div class="top">
+        <button type="button" data-page="homePage">← Буцах</button>
+        <h2>Хичээл сонголт II</h2>
+      </div>
+
+      <p class="page-note">Сонгосон хичээл бүрийн багш болон цагийг сонгоно.</p>
+      <div id="course2List" class="course-list"></div>
+    </section>
+
+    <section id="attendancePage" class="page">
+      <div class="top">
+        <button type="button" data-page="homePage">← Буцах</button>
+        <h2>Ирц өгөх</h2>
+      </div>
+
+      <p class="page-note">Багшийн QR кодыг уншуулж ирцээ баталгаажуулна.</p>
+      <article class="attendance-card">
+        <div class="qr-box" aria-label="QR уншигч хэсэг">
+          <div class="qr-mark">
+            <span></span><span></span><span></span><span></span>
+          </div>
+          <strong>QR уншигч</strong>
+          <small>Камераа QR код руу чиглүүлнэ үү</small>
+        </div>
+
+        <button id="submitAttendanceButton" type="button">QR уншуулах</button>
+        <p id="attendanceMsg" class="message"></p>
+      </article>
+
+      <div id="attendanceList" class="attendance-list"></div>
+    </section>
+
+    <section id="paymentPage" class="page">
+  <div class="top">
+    <button type="button" data-page="homePage">← Буцах</button>
+    <h2>Төлбөр</h2>
+  </div>
+
+  <article class="card payment-card">
+    <p>Сонгосон кредит: <strong id="paymentCredit">0</strong></p>
+    <p>1 кредитийн үнэ: <strong>220,000₮</strong></p>
+    <p>Төлөх дүн: <strong id="paymentTotal">0₮</strong></p>
+    <p>Төлөв: <strong id="paymentStatus">Төлөөгүй</strong></p>
+
+    <button type="button" id="payButton">Төлбөр төлөх</button>
+
+    <div id="paymentOptions" class="payment-options hidden">
+      <button type="button" data-action="choosePayment" data-method="qr">
+        QR / QPay
+      </button>
+
+      <button type="button" data-action="choosePayment" data-method="bank">
+        Дансаар төлөх
+      </button>
+    </div>
+
+    <div id="qrPanel" class="pay-panel hidden">
+      <h3>QR төлбөр</h3>
+
+      <div class="fake-qr">
+        <span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span>
+      </div>
+
+      <p>QPay app-аар QR код уншуулна уу.</p>
+
+      <button type="button" data-action="confirmPayment" data-method="qr">
+        QR төлбөр баталгаажуулах
+      </button>
+    </div>
+
+    <div id="bankPanel" class="pay-panel hidden">
+      <h3>Дансаар төлөх</h3>
+
+      <p>Банк: <strong>Хаан банк</strong></p>
+      <p>Данс: <strong>5030123456</strong></p>
+      <p>Хүлээн авагч: <strong>NMIT</strong></p>
+      <p>Гүйлгээний утга: <strong>SE23D18</strong></p>
+
+      <button type="button" data-action="confirmPayment" data-method="bank">
+        Дансны төлбөр баталгаажуулах
+      </button>
+    </div>
+
+    <p id="payMsg" class="message"></p>
+  </article>
+</section>
+
+    <section id="profilePage" class="page">
+      <div class="top">
+        <button type="button" data-page="homePage">← Буцах</button>
+        <h2>Профайл</h2>
+      </div>
+
+      <article class="card">
+        <h3 class="section-title">Хувийн мэдээлэл</h3>
+        <div class="field">
+          <label for="nameInput">Нэр</label>
+          <input id="nameInput" type="text" value="Энхтулга">
+        </div>
+
+        <div class="field">
+          <label for="phoneInput">Утас</label>
+          <input id="phoneInput" type="tel" value="99999999">
+        </div>
+
+        <button type="button" id="saveProfileButton">Хадгалах</button>
+        <p id="profileMsg" class="message"></p>
+      </article>
+
+      <article class="card password-card">
+        <h3 class="section-title">Нууц үг солих</h3>
+        <div class="field">
+     
+          <label for="currentPassword">Одоогийн нууц үг</label>
+          <input id="currentPassword" type="password" placeholder="Одоогийн нууц үг" autocomplete="current-password">
+        </div>
+
+        <div class="field">
+          <label for="profileNewPassword">Шинэ нууц үг</label>
+          <input id="profileNewPassword" type="password" placeholder="Шинэ нууц үг" autocomplete="new-password">
+        </div>
+
+        <div class="field">
+          <label for="profileConfirmPassword">Шинэ нууц үг давтах</label>
+          <input id="profileConfirmPassword" type="password" placeholder="Давтан оруулах" autocomplete="new-password">
+        </div>
+
+        <button type="button" id="changePasswordButton">Нууц үг солих</button>
+        <p id="passwordMsg" class="message"></p>
+      </article>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
